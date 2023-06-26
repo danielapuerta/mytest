@@ -5,5 +5,6 @@ exports.seed = async knex => {
         {username: 'leo', password_hash: "leo_password"},
         {username: 'mark', password_hash: "mark_password"}, 
         {username: 'tom', password_hash: "tom_password"},
+        {username: 'dani', password_hash: "dani_password"},
       ]);
 };
