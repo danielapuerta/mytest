@@ -32,14 +32,14 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:3000/login',
+                url: 'http://localhost:5000/users',
                 data: oUser,
                 //dataType: 'json',
                 success: function (data, status) {
                     console.log("DATA HERE " + oUser)
                 },
                 error: function (data, status) {
-                    alert('POST failed.');
+                    alert('POST failed!!.');
                 }
             });
 
