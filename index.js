@@ -14,9 +14,10 @@ app.use(cors())
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-app.get("/", (request, response, next) => {
-    response. sendStatus(200)
- })
+/* GET home page. */
+app.get('/', function(req, res, next) {
+    res.render('index', { title: 'SeniorCare' });
+  });
 
 const port = 5000
 
