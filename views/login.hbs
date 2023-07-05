@@ -1,0 +1,53 @@
+<form id="userForm" name="userForm">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+    </div>
+
+    {{!-- <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    </div> --}}
+
+    <div>
+        <label for="password">Password (8 characters minimum):</label>
+        <input type="password" id="password" name="password" minlength="8" required>
+    </div>
+
+    <input type="submit" value="Login">
+
+</form>
+
+
+<script>
+
+    $(function () {
+        $("#userForm").on("submit", function (event) {
+            event.preventDefault();
+
+            var oUser = {
+                username: $('input[name=username]').val(),
+                password: $('input[name=password]').val()
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:3000/login',
+                data: oUser,
+                //dataType: 'json',
+                success: function (data, status) {
+                    console.log("DATA HERE " + oUser)
+                },
+                error: function (data, status) {
+                    alert('POST failed.');
+                }
+            });
+
+
+        });//end of user form func
+
+
+
+    })//end of main function
+
+</script>
