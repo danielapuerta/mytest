@@ -23,7 +23,9 @@ app.use(cors())
 
 const port = 5000
 
-app.listen(port, () => console.log(`listening at port ${port}`))
-
 app.use(userRouter)
 app.use(indexRouter)
+
+app.listen(port, () => console.log(`listening at port ${port}`))
+
+
