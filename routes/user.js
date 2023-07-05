@@ -5,15 +5,25 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 router.post("/users", (request, response, next) => {
-    database("users").insert({
-       username: request.body.username,
-       password_hash: request.body.password
+    bcrypt.hash(request.body.password, 10)
+    .then(hashedPassword => {
+       return database("users").insert({
+          username: request.body.username,
+          password_hash: hashedPassword
+       })
+       .returning(["id", "username"])
+       .then(users => {
+          response.json(users[0])
+       })
+       .catch(error => next(error))
     })
-    .returning(["id", "username"])
+ })
+
+ router.get("/users", (request, response, next) => {
+    database("users")
     .then(users => {
-       response.json(users[0])
+       response.json(users)
     })
-    .catch(error => next(error))
  })
 
 // router.post("/login", ( request, response ) => {
