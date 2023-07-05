@@ -8,6 +8,10 @@ const app = express();
 app.use(bodyParser.json())
 app.use(cors())
 
+app.get("/", (request, response, next) => {
+    response. sendStatus(200)
+ })
+
 const port = 5000
 
 app.listen(port, () => console.log(`listening at port ${port}`))

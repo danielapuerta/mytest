@@ -23,6 +23,8 @@ router.post("/users", ( request, response ) => {
         })
 });
 
+
+
 router.post("/login", ( request, response ) => {
     const { user } = request.body
     database("users")
@@ -66,6 +68,13 @@ function authenticate(request, response, next) {
         })
     })
 }
+
+router.get("/users", (request, response, next) => {
+    database("users")
+    .then(users => {
+       response.json(users)
+    })
+ })
 
 router.get('/someRoute', authenticate, (request, response) => {
     response.json({message: `Welcome ${request.user.username}!` })
