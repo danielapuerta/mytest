@@ -23,8 +23,6 @@ router.post("/users", ( request, response ) => {
         })
 });
 
-
-
 router.post("/login", ( request, response ) => {
     const { user } = request.body
     database("users")
