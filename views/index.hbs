@@ -1,0 +1,17 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+
+<button class="btnLogin" id="btnLogin" type="button"> Login </button>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#btnLogin").click(function () {
+            hostName = window.location.origin
+            newUrl = hostName + "/login"
+            location.href = newUrl
+
+        });
+    });
+</script>
