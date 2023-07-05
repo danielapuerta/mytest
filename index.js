@@ -1,12 +1,18 @@
 const express = require('express')
 const bodyParser = require("body-parser")
 const cors = require('cors')
+var path = require('path');
+
 const userRouter = require('./routes/user')
 
 const app = express();
 
 app.use(bodyParser.json())
 app.use(cors())
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
 
 app.get("/", (request, response, next) => {
     response. sendStatus(200)
