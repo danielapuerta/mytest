@@ -4,7 +4,8 @@ const database = require('../db/db')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
-router.post("/users", (request, response, next) => {
+//req post register user
+router.post("/api/register", (request, response, next) => {
     bcrypt.hash(request.body.password, 10)
     .then(hashedPassword => {
        return database("users").insert({

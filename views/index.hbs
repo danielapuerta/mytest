@@ -2,7 +2,7 @@
 <p>Welcome to {{title}}</p>
 
 <button class="btnLogin" id="btnLogin" type="button"> Login </button>
-
+<button class="btnRegister" id="btnRegister" type="button"> Register </button>
 
 
 <script>
@@ -10,6 +10,15 @@
         $("#btnLogin").click(function () {
             hostName = window.location.origin
             newUrl = hostName + "/login"
+            location.href = newUrl
+
+        });
+    });
+
+    $(document).ready(function () {
+        $("#btnRegister").click(function () {
+            hostName = window.location.origin
+            newUrl = hostName + "/register"
             location.href = newUrl
 
         });

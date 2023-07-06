@@ -31,15 +31,16 @@
             }
 
             $.ajax({
-                type: 'GET',
-                url: 'http://localhost:5000/login',
+                type: 'POST',
+                url: 'http://localhost:5000/api/register',
                 data: oUser,
                 //dataType: 'json',
                 success: function (data, status) {
                     console.log("DATA HERE " + oUser)
                     hostName = window.location.origin
-                    newUrl = hostName + "/residentsList"
+                    newUrl = hostName + "/login"
                     location.href = newUrl
+
                 },
                 error: function (data, status) {
                     alert('POST failed!!.');
