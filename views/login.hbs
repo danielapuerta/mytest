@@ -31,12 +31,12 @@
             }
 
             $.ajax({
-                type: 'GET',
-                url: 'http://localhost:5000/login',
+                type: 'POST',
+                url: 'http://localhost:5000/api/authen/login',
                 data: oUser,
                 //dataType: 'json',
                 success: function (data, status) {
-                    console.log("DATA HERE " + oUser)
+                    console.log("DATA HERE " + oUser.username + " " + oUser.password)
                     hostName = window.location.origin
                     newUrl = hostName + "/residentsList"
                     location.href = newUrl
