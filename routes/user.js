@@ -3,6 +3,7 @@ const router = express.Router()
 const database = require('../db/db')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const SECRET = "secret"
 
 //req post register user
 router.post("/api/register", (request, response, next) => {
@@ -26,6 +27,33 @@ router.post("/api/register", (request, response, next) => {
        response.json(users)
     })
  })
+
+ router.post("/api/authen/login", (request, response, next) => {
+   database("users")
+   .where({username: request.body.username})
+   .first()
+   .then(user => {
+      if(!user){
+         response.status(401).json({
+            error: "No user by that name"
+         })
+      }else{
+         return bcrypt
+         .compare(request.body.password, user.password_hash)
+         .then(isAuthenticated => {
+            if(!isAuthenticated){
+               response.status(401).json({
+                  error: "Unauthorized Access!"
+               })
+            }else{
+               return jwt.sign(user, SECRET, (error, token) => {
+                  response.status(200).json({token})
+               })
+            }
+         })
+      }
+   })
+})
 
 
 
