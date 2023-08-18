@@ -39,15 +39,15 @@ router.post("/api/register", (request, response, next) => {
  })
 
 
- router.post("/api/authen/login", (request, response, next) => {
+ router.post("/api/login", (request, response, next) => {
    //user logs in and first check is
    database("users")
    //select from the users table where username in db == to username from the request body 
    .where({username: request.body.username})
    .first()
-   .then(user => {
+   .then(retrievedUser  => {
       //if user is not found, send an error response
-      if(!user){
+      if(!retrievedUser ){
          response.status(401).json({
             error: "No user by that name"
          })
@@ -63,7 +63,7 @@ router.post("/api/register", (request, response, next) => {
                })
             }else{
                //if it's authenticated, create and return a token with the user found
-               return jwt.sign(user, SECRET, (error, token) => {
+               return jwt.sign(payload, SECRET, (error, token) => {
                   response.status(200).json({token})
                })
             }
@@ -71,6 +71,7 @@ router.post("/api/register", (request, response, next) => {
       }
    })
 })
+
 
 
 
