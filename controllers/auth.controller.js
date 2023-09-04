@@ -2,28 +2,18 @@ const database = require("../db/db");
 const jwt = require("jsonwebtoken");
 const SECRET = "secret";
 
-verifyToken = (req, res, next) => {
-    let token = req.headers["x-access-token"];
-  
-    if (!token) {
-      return res.status(403).send({
-        message: "No token provided!"
-      });
-    }
-  
-    jwt.verify(token,
-              SECRET,
-              (err, decoded) => {
-                if (err) {
-                  return res.status(401).send({
-                    message: "Unauthorized!",
-                  });
-                }
-                req.id = decoded.id;
-                next();
-              });
-  };
+function verifyjwt(req,res,next){
+  const token = req.headers['authorization']
+  if(!token) return res.status(401).json('Unauthorized user')
 
+ try{
+      const decoded = jwt.verify(token,SECRET);
+      req.user = decoded
+      next()
 
+ }catch(e){
+  res.status(400).json('Token not valid')
+ }
+}
 
-module.exports = {verifyToken}
+module.exports = verifyjwt
