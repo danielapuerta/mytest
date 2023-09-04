@@ -4,9 +4,8 @@ const database = require('../db/db')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const SECRET = "secret"
-//const {verifyToken} = require("../controllers/auth.controller")
+const verifyjwt = require("../controllers/auth.controller")
 
-//req post register user
 
 //create route for registering
 router.post("/api/register", (request, response, next) => {
@@ -35,7 +34,7 @@ router.post("/api/register", (request, response, next) => {
  })
 
 
- router.post("/login", (request, response, next) => {
+ router.post("/api/login", verifyjwt, (request, response, next) => {
    database("users")
    .where({username: request.body.username})
    .first()
@@ -46,7 +45,7 @@ router.post("/api/register", (request, response, next) => {
          })
       }else{
          return bcrypt
-         .compare(request.body.password, user.password_digest)
+         .compare(request.body.password, user.password_hash)
          .then(isAuthenticated => {
             if(!isAuthenticated){
                response.status(401).json({
@@ -62,6 +61,22 @@ router.post("/api/register", (request, response, next) => {
    })
 })
 
+// router.get("/verify", (request, response, next) => {
+//    //const token = request.headers.authorization.split(" ")[1]
+//    const token = request.body.token
+//    jwt.verify(token, SECRET, (error, decodedToken) => {
+//       if(error){
+//          response.status(401).json({
+//             message: "Unauthorized Access!"
+//          })
+//       }else{
+//          response.status(200).json({
+//             id: decodedToken.id,
+//             username: decodedToken.username
+//          })
+//       }
+//    })
+// })
 
 
 module.exports = router;
