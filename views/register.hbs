@@ -1,7 +1,7 @@
-<form id="userForm" name="userForm">
+<form id="nurseForm" name="nurseForm">
     <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
+        <label for="nurseCode">Nurse Code:</label>
+        <input type="text" id="nurseCode" name="nurseCode">
     </div>
 
     {{!-- <div>
@@ -22,11 +22,11 @@
 <script>
 
     $(function () {
-        $("#userForm").on("submit", function (event) {
+        $("#nurseForm").on("submit", function (event) {
             event.preventDefault();
 
             var oUser = {
-                username: $('input[name=username]').val(),
+                nurseCode: $('input[name=nurseCode]').val(),
                 password: $('input[name=password]').val()
             }
 
