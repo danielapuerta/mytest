@@ -1,1 +1,59 @@
 <p>This is the List Of Residents</p>
+
+
+{{!-- <form id="residentForm" name="residentForm">
+    <div>
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName">
+    </div>
+
+    <div>
+        <label for="age">Age:</label>
+        <input type="age" id="age" name="age">
+    </div>
+
+    <div>
+        <label for="roomNumber">Room Number:</label>
+        <input type="roomNumber" id="roomNumber" name="roomNumber">
+    </div>
+
+    <input type="submit" value="Submit">
+
+</form> --}}
+
+
+<script>
+
+    $(function () {
+        $("#residentForm").on("submit", function (event) {
+            event.preventDefault();
+
+            var oResident = {
+                fullName: $('input[name=fullName]').val(),
+                age: $('input[name=age]').val(),
+                roomNumber: $('input[name=roomNumber]').val()
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/api/addNewResident',
+                data: oResident,
+                //dataType: 'json',
+                success: function (data, status) {
+                    hostName = window.location.origin
+                    newUrl = hostName + "/residentsList"
+                    location.href = newUrl
+                },
+                error: function (data, status) {
+                    alert('POST failed!!.');
+                }
+            });
+
+
+        });//end of user form func
+
+
+
+    })//end of main function
+
+</script>
