@@ -4,6 +4,7 @@ const database = require('../db/db')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
+//this is the secret key also known as the token
 const secret =  "SECRET"
 //const verifyjwt = require("../controllers/auth.controller")
 
@@ -35,9 +36,10 @@ router.post("/api/register", (request, response, next) => {
  })
 
 
- router.post("/api/login", authenticateUser, (request, response, next) => {
+ router.post("/api/login", (request, response, next) => {
    //create an user object to req body from hbs
    const oUser  = request.body
+   //console.log(oUser)
    //select users table from db
    database("users")
    //where the row username in db matches the nurseCode input by user
@@ -60,8 +62,21 @@ router.post("/api/register", (request, response, next) => {
                   error: "Unauthorized Access!"
                })
             }else{
+               //create a token with 3 parameters
                return jwt.sign(oUser, secret, (error, token) => {
+                  console.log('this is line 67')
+                  //create the cookie
+                  let options = {
+                     maxAge: 1000 * 60 * 60, // would expire after 60min
+                     httpOnly: true, // The cookie only accessible by the web server
+                     signed: true // Indicates if the cookie should be signed                      
+                  }
+                  //store the the token in the cookie
+                  response.cookie('x-access-token', token)
+                  console.log('this is line 75')
+                  //create the token by storing it in token
                   response.status(200).json({token})
+                  console.log('this is line 77')
                })
             }
          })
@@ -70,7 +85,7 @@ router.post("/api/register", (request, response, next) => {
 })
 
 function authenticateUser(request, response, next) {
-   const token = request.headers.authorization.split(" ")[1]
+   let token = request.headers["x-access-token"];
    jwt.verify(token, secret, (error, decodedToken) => {
       if(error){
          response.status(401).json({
@@ -85,20 +100,7 @@ function authenticateUser(request, response, next) {
    })
 }
 
-function verifyjwt(request,response,next){
-   const oUser  = request.body
-   const token = req.headers['authorization']
-   if(!token) return res.status(401).json('Unauthorized user')
- 
-  try{
-       const decoded = jwt.verify(token,secret);
-       req.user = decoded
-       next()
- 
-  }catch(e){
-   res.status(400).json('Token not valid')
-  }
- }
+
 
 // router.get("/verify", (request, response, next) => {
 //    //const token = request.headers.authorization.split(" ")[1]
