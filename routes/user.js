@@ -10,23 +10,60 @@ const secret =  "SECRET"
 
 
 //create route for registering
-router.post("/api/register", (request, response, next) => {
+router.post("/api/register",  (request, response, next) => {
    //const role = 'basic-user'
+   const oUser = request.body
 
-   bcrypt.hash(request.body.password, 10)
-   .then(hashedPassword => {
-      return database("users").insert({
-         username: request.body.nurseCode,
-         password_hash: hashedPassword,
-         //role: role
-      })
-      .returning(["id", "username"])
-      .then(users => {
-         response.json(users[0])
-      })
-      .catch(error => next(error))
+   let bUserExists = checkDuplicateNurseCode(oUser.nurseCode);
+
+   // bcrypt.hash(password, 10)
+   // .then(hashedPassword => {
+   //    return database("users").insert({
+   //       username: nurseCode,
+   //       password_hash: hashedPassword,
+   //       //role: role
+         
+   //    })
+   //    .returning(["id", "username"])
+      
+   //    // .then(users => {
+   //    //    response.json(users[0])
+   //    // })
+   //    // .catch(error => next(error))
+
+   // })
+  
+
+});
+
+function checkDuplicateNurseCode(sNurseCode){
+
+   let oUser = database('users').where({username : sNurseCode}).first()
+   .then(function(oUser){
+      if(oUser){
+         console.log("checking output for: " + oUser)
+         console.log("this user: " + oUser + "already exists")
+      }else{
+         return database("users").insert({username : sNurseCode, password_hash : 'testpass'})
+      }
    })
-})
+   .then(function(oUser){
+      console.log(oUser)
+   }).catch(function(error){
+      console.error(error);
+   })
+
+
+
+   //no user found
+   console.log("checking output for User object")
+   console.log(oUser)
+}
+
+
+
+
+
 
  router.get("/users", (request, response, next) => {
     database("users")
@@ -64,19 +101,11 @@ router.post("/api/register", (request, response, next) => {
             }else{
                //create a token with 3 parameters
                return jwt.sign(oUser, secret, (error, token) => {
-                  console.log('this is line 67')
                   //create the cookie
-                  let options = {
-                     maxAge: 1000 * 60 * 60, // would expire after 60min
-                     httpOnly: true, // The cookie only accessible by the web server
-                     signed: true // Indicates if the cookie should be signed                      
-                  }
                   //store the the token in the cookie
                   response.cookie('x-access-token', token)
-                  console.log('this is line 75')
                   //create the token by storing it in token
                   response.status(200).json({token})
-                  console.log('this is line 77')
                })
             }
          })
@@ -84,40 +113,7 @@ router.post("/api/register", (request, response, next) => {
    })
 })
 
-function authenticateUser(request, response, next) {
-   let token = request.headers["x-access-token"];
-   jwt.verify(token, secret, (error, decodedToken) => {
-      if(error){
-         response.status(401).json({
-            message: "Unauthorized Access!"
-         })
-      }else{
-         response.status(200).json({
-            id: decodedToken.id,
-            username: decodedToken.username
-         })
-      }
-   })
-}
 
-
-
-// router.get("/verify", (request, response, next) => {
-//    //const token = request.headers.authorization.split(" ")[1]
-//    const token = request.body.token
-//    jwt.verify(token, SECRET, (error, decodedToken) => {
-//       if(error){
-//          response.status(401).json({
-//             message: "Unauthorized Access!"
-//          })
-//       }else{
-//          response.status(200).json({
-//             id: decodedToken.id,
-//             username: decodedToken.username
-//          })
-//       }
-//    })
-// })
 
 //route to create a resident
 router.post("/api/addNewResident", (request, response, next) => {
