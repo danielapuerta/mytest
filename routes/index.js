@@ -30,7 +30,7 @@ function authenticateUser(request, response, next) {
   jwt.verify(token, secret, (error, decodedToken) => {
      if(error){
         response.status(401).json({
-           message: "Unauthorized Access!"
+           message: "Unauthorized Access, Token not valid!"
         })
      }else{
       //executes the next middleware 
