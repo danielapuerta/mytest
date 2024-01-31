@@ -1,7 +1,7 @@
 <form id="userForm" name="userForm">
     <div>
-        <label for="nurseCode">Nurse Code:</label>
-        <input type="text" id="nurseCode" name="nurseCode">
+        <label for="nursecode">Nurse Code:</label>
+        <input type="text" id="nursecode" name="nursecode">
     </div>
 
     {{!-- <div>
@@ -26,7 +26,7 @@
             event.preventDefault();
 
             var oUser = {
-                nurseCode: $('input[name=nurseCode]').val(),
+                nursecode: $('input[name=nursecode]').val(),
                 password: $('input[name=password]').val()
             }
 
@@ -36,7 +36,7 @@
                 data: oUser,
                 //dataType: 'json',
                 success: function (data, status) {
-                    console.log("DATA HERE " + oUser.nurseCode + " " + oUser.password)
+                    console.log("DATA HERE " + oUser.nursecode + " " + oUser.password)
                     hostName = window.location.origin
                     newUrl = hostName + "/residentsList"
                     location.href = newUrl

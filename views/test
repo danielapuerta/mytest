@@ -1,0 +1,19 @@
+          $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/api/register',
+                data: oUser,
+                
+                //dataType: 'json',
+                success: function (data, status) {
+                    console.log("DATA HERE " + oUser)
+                    hostName = window.location.origin
+                    newUrl = hostName + "/residentsList"
+                    location.href = newUrl
+                    console.log("Data: " + data + " \nStatus: " + status)
+                    
+
+                },
+                error: function (data, status) {
+                    console.log("Data: " + data + " \nStatus: " + status);
+                }
+            });

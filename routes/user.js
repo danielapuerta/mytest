@@ -14,7 +14,14 @@ router.post("/api/register",  (request, response, next) => {
    //const role = 'basic-user'
    const oUser = request.body
 
-   let bUserExists = checkDuplicateNurseCode(oUser.nurseCode);
+      //console.log("This is the user object " + oUser)
+      console.log(oUser)
+      console.log(oUser.nursecode)
+      
+
+   //console.log("This data" + oUser )
+
+   //let bUserExists = checkDuplicateNurseCode(oUser.nursecode);
 
    // bcrypt.hash(password, 10)
    // .then(hashedPassword => {
@@ -26,42 +33,33 @@ router.post("/api/register",  (request, response, next) => {
    //    })
    //    .returning(["id", "username"])
       
-   //    // .then(users => {
-   //    //    response.json(users[0])
-   //    // })
-   //    // .catch(error => next(error))
+      // .then(users => {
+      //    response.json(users[0])
+      // })
+      // .catch(error => next(error))
 
-   // })
+   //})
   
 
 });
 
 function checkDuplicateNurseCode(sNurseCode){
-
-   let oUser = database('users').where({username : sNurseCode}).first()
-   .then(function(oUser){
+   database('users').where({nursecode : sNurseCode}).first()
+   .then((oUser)=>{
       if(oUser){
-         console.log("checking output for: " + oUser)
-         console.log("this user: " + oUser + "already exists")
-      }else{
-         return database("users").insert({username : sNurseCode, password_hash : 'testpass'})
+         console.log("this nurse code: " + oUser + " is already in use")
+         return
       }
+      next();
    })
-   .then(function(oUser){
-      console.log(oUser)
-   }).catch(function(error){
-      console.error(error);
-   })
-
-
-
-   //no user found
-   console.log("checking output for User object")
-   console.log(oUser)
 }
 
-
-
+function checkPassword(password){
+   database('users').where({password_hash: password}).first()
+   .then((oUser)=>{
+      
+   })
+}
 
 
 

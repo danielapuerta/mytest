@@ -1,7 +1,7 @@
 <form id="nurseForm" name="nurseForm">
     <div>
-        <label for="nurseCode">Nurse Code:</label>
-        <input type="text" id="nurseCode" name="nurseCode">
+        <label for="nursecode">Nurse Code:</label>
+        <input type="text" id="nursecode" name="nursecode">
     </div>
 
     {{!-- <div>
@@ -10,8 +10,13 @@
     </div> --}}
 
     <div>
-        <label for="password">Password (8 characters minimum):</label>
-        <input type="password" id="password" name="password" minlength="8" required>
+        <label for="password">Password (3 characters minimum):</label>
+        <input type="password" id="password" name="password" minlength="3" required>
+    </div>
+
+    <div>
+        <label for="password">Repeat Password:</label>
+        <input type="password" id="repeatPassword" name="repeatPassword" minlength="3" required>
     </div>
 
     <input type="submit" value="Register">
@@ -24,29 +29,40 @@
     $(function () {
         $("#nurseForm").on("submit", function (event) {
             event.preventDefault();
-
+            //create an User Object to store 3 data values
             var oUser = {
-                nurseCode: $('input[name=nurseCode]').val(),
-                password: $('input[name=password]').val()
+                nursecode: $('input[name=nursecode]').val(),
+                password: $('input[name=password]').val(),
+                repeatPassword: $('input[name=repeatPassword]').val()
             }
 
-            $.ajax({
-                type: 'POST',
-                url: 'http://localhost:5000/api/register',
-                data: oUser,
-                //dataType: 'json',
-                success: function (data, status) {
-                    console.log("DATA HERE " + oUser)
-                    hostName = window.location.origin
-                    newUrl = hostName + "/residentsList"
-                    location.href = newUrl
+            //compare passwords if they match
+            if (oUser.password != oUser.repeatPassword) {
+                console.log("Fail! Passwords do not match!")
+            } else {
+                delete oUser['repeatPassword'];
+                //post the data using jquery ajax
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:5000/api/register',
+                    //data: JSON.stringify(oUser),
+                    data: oUser,
+                    dataType: 'json',
+                    success: function (data, status) {
+                        console.log("DATA HERE " + data)
+                        hostName = window.location.origin
+                        newUrl = hostName + "/residentsList"
+                        location.href = newUrl
+                        console.log("Data: " + data + " \nStatus: " + status)
 
-                },
-                error: function (data, status) {
-                    alert('POST failed!!.');
-                }
-            });
-       
+
+                    },
+                    error: function (data, status) {
+                        console.log("Data: " + data + " \nStatus: " + status);
+                    }
+                });
+            }
+            console.log("testing what happens after if")
 
         });//end of user form func
 

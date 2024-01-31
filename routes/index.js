@@ -17,7 +17,7 @@ router.get('/register', function(req, res, next) {
   res.render('register', { title: 'SeniorCare' });
 });
 
-router.get('/residentsList', authenticateUser, function(req, res, next) {
+router.get('/residentsList', function(req, res, next) {
   
   res.render('residentsList', { title: 'SeniorCare' });
 });
