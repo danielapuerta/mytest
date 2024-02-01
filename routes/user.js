@@ -10,56 +10,36 @@ const secret = "SECRET";
 
 //create route for registering
 router.post("/api/register", (request, response, next) => {
-   //create a var that holds the User object
+  //create a var that holds the User object
   const oUser = request.body;
 
   //select from the table users
-  database("users")
-  //where a row in the column nursecode is equal to the one the User inputs
-    .where({ nursecode: oUser.nursecode})
+   //where a row in the column nursecode is equal to the one the User inputs
     //limit to 1
-    .first()
-    //when the User object is found we use a promise that holds a function with the response
+   //when the User object is found we use a promise that holds a function with the response
     //the response is a json object
     //to check what the response is I did a console.log to check what type is that response
+   database("users")
+    .where({ nursecode: oUser.nursecode })
+    .first()
     .then(function (response) {
       //if the json object is type undefined
-      if (response == undefined) {
-         //if the user object already exists return true
+      if (response != undefined) {
+        //if the user object already exists return true
         console.log("This nursecode already exists!");
         return true;
       } else {
-         //if the user object does not exist, return false AND insert nursecode in the db
+        //if the user object does not exist, return false AND create User in the db
         console.log("it hit the else statement line 60");
-        return false;
+        return 
+    
       }
     });
 
-  // bcrypt.hash(password, 10)
-  // .then(hashedPassword => {
-  //    return database("users").insert({
-  //       username: nurseCode,
-  //       password_hash: hashedPassword,
-  //       //role: role
 
-  //    })
-  //    .returning(["id", "username"])
-
-  // .then(users => {
-  //    response.json(users[0])
-  // })
-  // .catch(error => next(error))
-
-  //})
 });
 
-//this function will retuirn a boolean
-//the true condition is when the nursecode is found in the db
-//the false condition is when the nursecode is NOT found in the db
 
-function checkDuplicateNurseCode(sNurseCode) {
-
-}
 
 router.get("/users", (request, response, next) => {
   database("users").then((users) => {
