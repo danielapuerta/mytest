@@ -54,13 +54,6 @@ function checkDuplicateNurseCode(sNurseCode){
    })
 }
 
-function checkPassword(password){
-   database('users').where({password_hash: password}).first()
-   .then((oUser)=>{
-      
-   })
-}
-
 
 
  router.get("/users", (request, response, next) => {
