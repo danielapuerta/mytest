@@ -31,12 +31,14 @@ router.post("/api/register", (request, response, next) => {
       } else {
         //if the user object does not exist, return false AND create User in the db
         console.log("it hit the else statement line 33");
-        //create a var that stores the hashed password
         //use bcrypt to hash the password using request.body
         //.then is a promise to create and store the password
-        let hashedPass = bcrypt.hash(oUser.password, 8).then(function(hash){
-          console.log('this is the hashed pass ' + hash)
+        bcrypt.hash(oUser.password, 8).then(function(hash){
+          console.log('this is the hashed pass ' + hashedPass)
         })
+        // insert({nursecode: oUser.nursecode, password_hash: hashedPass}).then(function(oUser){
+        //   console.log('A new user has been created sucessfully ' + oUser)
+        // })
         return false
     
       }
