@@ -14,12 +14,12 @@ router.post("/api/register", (request, response, next) => {
   const oUser = request.body;
 
   //select from the table users
-   //where a row in the column nursecode is equal to the one the User inputs
-    //limit to 1
-   //when the User object is found we use a promise that holds a function with the response
-    //the response is a json object
-    //to check what the response is I did a console.log to check what type is that response
-   database("users")
+  //where a row in the column nursecode is equal to the one the User inputs
+  //limit to 1
+  //when the User object is found we use a promise that holds a function with the response
+  //the response is a json object
+  //to check what the response is I did a console.log to check what type is that response
+  database("users")
     .where({ nursecode: oUser.nursecode })
     .first()
     .then(function (response) {
@@ -33,21 +33,26 @@ router.post("/api/register", (request, response, next) => {
         console.log("it hit the else statement line 33");
         //use bcrypt to hash the password using request.body
         //.then is a promise to create and store the password
-        bcrypt.hash(oUser.password, 8).then(function(hash){
-          console.log('this is the hashed pass ' + hashedPass)
-        })
+        bcrypt.hash(oUser.password, 8).then(function (hashedPass) {
+          console.log("this is the hashed pass " + hashedPass);
+          //select users table
+          //insert nursecode in nursecode
+          //insert hashedPass in password_hash
+          //use .then Promise to create the user
+          database("users")
+            .insert({ nursecode: oUser.nursecode, password_hash: hashedPass })
+            .then(function (oUser) {
+              console.log("A new user has been created sucessfully " + oUser);
+              console.log(oUser.nursecode);
+            });
+        });
         // insert({nursecode: oUser.nursecode, password_hash: hashedPass}).then(function(oUser){
         //   console.log('A new user has been created sucessfully ' + oUser)
         // })
-        return false
-    
+        return false;
       }
     });
-
-
 });
-
-
 
 router.get("/users", (request, response, next) => {
   database("users").then((users) => {
