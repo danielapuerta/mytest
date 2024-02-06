@@ -43,7 +43,13 @@ router.post("/api/register", (request, response, next) => {
             .insert({ nursecode: oUser.nursecode, password_hash: hashedPass })
             .then(function (oUser) {
               console.log("A new user has been created sucessfully " + oUser);
-              console.log(oUser.nursecode);
+              //create token with .sign function, it takes in 2 para:
+              //the payload is the user object and the secret key
+              //create a Promise calling a function that resolves the token
+              jwt.sign({oUser}, secret, function(err, token){
+                console.log("this is the token: " + token)
+  
+              })
             });
         });
         // insert({nursecode: oUser.nursecode, password_hash: hashedPass}).then(function(oUser){
