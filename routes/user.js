@@ -35,10 +35,10 @@ router.post("/api/register", (request, response, next) => {
         //.then is a promise to create and store the password
         bcrypt.hash(oUser.password, 8).then(function (hashedPass) {
           console.log("this is the hashed pass " + hashedPass);
-          //select users table
-          //insert nursecode in nursecode
-          //insert hashedPass in password_hash
-          //use .then Promise to create the user
+          //insert nursecode input by user in nursecode field
+          //insert hashedPass inout by user in password_hash field
+          //insert will create a row = user (id, nursecode, password, role)
+          //use a promise to resolve the user object
           database("users")
             .insert({ nursecode: oUser.nursecode, password_hash: hashedPass })
             .then(function (oUser) {
