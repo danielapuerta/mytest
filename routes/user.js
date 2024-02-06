@@ -22,11 +22,11 @@ router.post("/api/register", (request, response, next) => {
   database("users")
     .where({ nursecode: oUser.nursecode })
     .first()
-    .then(function (response) {
+    .then(function (dbResponse) {
       //if the json object is type undefined
-      if (response) {
+      if (dbResponse) {
         //if the user object already exists return true
-        console.log("This nursecode : " + response +  "already exists!");
+        console.log("This nursecode : " + dbResponse +  "already exists!");
         return true;
       } else {
         //if the user object does not exist, return false AND create User in the db
@@ -46,10 +46,14 @@ router.post("/api/register", (request, response, next) => {
               //create token with .sign function, it takes in 2 para:
               //the payload is the user object and the secret key
               //create a Promise calling a function that resolves the token
-              jwt.sign({oUser}, secret, function(err, token){
-                console.log("this is the token: " + token)
-  
-              })
+              return jwt.sign(oUser, secret, (error, token) => {
+                //create the cookie
+                //store the the token in the cookie
+                response.cookie("x-access-token", token);
+                
+                //create the token by storing it in token
+                response.status(200).end();
+              });
             });
         });
         // insert({nursecode: oUser.nursecode, password_hash: hashedPass}).then(function(oUser){
@@ -73,7 +77,7 @@ router.post("/api/login", (request, response, next) => {
   //select users table from db
   database("users")
     //where the row username in db matches the nurseCode input by user
-    .where({ username: oUser.nurseCode })
+    .where({ nursecode: oUser.nursecode })
     //limit to 1
     .first()
     //store the object in a Promise
