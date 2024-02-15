@@ -26,7 +26,7 @@ router.post("/api/register", (request, response, next) => {
       //if the json object is type undefined
       if (dbResponse) {
         //if the user object already exists return true
-        console.log("This nursecode : " + dbResponse +  "already exists!");
+        console.log("This nursecode : " + dbResponse +  " already exists!");
         return true;
       } else {
         //if the user object does not exist, return false AND create User in the db

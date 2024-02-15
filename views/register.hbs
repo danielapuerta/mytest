@@ -1,4 +1,4 @@
-<form id="nurseForm" name="nurseForm">
+<form id="registerForm" name="registerForm">
     <div>
         <label for="nursecode">Nurse Code:</label>
         <input type="text" id="nursecode" name="nursecode">
@@ -27,7 +27,7 @@
 <script>
 
     $(function () {
-        $("#nurseForm").on("submit", function (event) {
+        $("#registerForm").on("submit", function (event) {
             event.preventDefault();
             //create an User Object to store 3 data values
             var oUser = {
@@ -35,6 +35,8 @@
                 password: $('input[name=password]').val(),
                 repeatPassword: $('input[name=repeatPassword]').val()
             }
+
+            if
 
             //compare passwords if they match
             if (oUser.password != oUser.repeatPassword) {

@@ -1,4 +1,4 @@
-<form id="userForm" name="userForm">
+<form id="loginForm" name="loginForm">
     <div>
         <label for="nursecode">Nurse Code:</label>
         <input type="text" id="nursecode" name="nursecode">
@@ -10,8 +10,8 @@
     </div> --}}
 
     <div>
-        <label for="password">Password (8 characters minimum):</label>
-        <input type="password" id="password" name="password" minlength="8" required>
+        <label for="password">Password (3 characters minimum):</label>
+        <input type="password" id="password" name="password" minlength="3" required>
     </div>
 
     <input type="submit" value="Login">
@@ -22,13 +22,17 @@
 <script>
 
     $(function () {
-        $("#userForm").on("submit", function (event) {
+        $("#loginForm").on("submit", function (event) {
             event.preventDefault();
 
             var oUser = {
                 nursecode: $('input[name=nursecode]').val(),
                 password: $('input[name=password]').val()
             }
+
+           // if(nursecode == null || "" || )
+
+            
 
             $.ajax({
                 type: 'POST',
