@@ -1,33 +1,31 @@
-<div class="container">
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-4 col-md-offset-4">
 
-        <form class="row justify-content-center" id="registerForm" name="registerForm">
+            <form id="registerForm" name="registerForm">
+                <div class="form-group">
+                    <label for="nursecode" class="form-label">Nursecode</label>
+                    <input type="text" class="form-control nursecode" id="nursecode" name="nursecode">
+                </div>
 
-            <div class="col-lg-2"> 
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control password" id="password" name="password">
+                </div>
 
-            <div class="mb-3">
-                <label for="nursecode" class="form-label">Nursecode</label>
-                <input type="text" class="form-control" id="nursecode" name="nursecode">
-            </div>
+                <div class="form-group">
+                    <label for="repeatPassword" class="form-label">Repeat Password</label>
+                    <input type="password" class="form-control repeatPassword" id="repeatPassword" name="repeatPassword">
+                </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
-
-            <div class="mb-3">
-                <label for="repeatPassword" class="form-label">Repeat Password</label>
-                <input type="password" class="form-control" id="repeatPassword" name="repeatPassword">
-            </div>
-
-            <br>
-            <button type="submit" class="btn btn-primary">Register</button>
-
-            </div>
-
-        </form>
-
-
+                <br>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
 </div>
+
+
 
 
 
